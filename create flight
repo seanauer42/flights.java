@@ -1,0 +1,90 @@
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.Icon;
+import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
+public class flight_query extends JFrame{
+//Using a standard Java icon
+	private Icon optionIcon = UIManager.getIcon("FileView.computerIcon");
+//Application start point
+	static Scanner sc = new Scanner(System.in);
+	public static void main(String[] args) {
+//Use the event dispatch thread for Swing components
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+		{
+//create GUI frame
+				new flight_query().setVisible(true);
+		}
+		});
+	}
+	public flight_query() 
+	{
+		//Declare the variables that will be used to create flights.
+		String plane;
+		String arrivalDeparture;
+		String when;
+		String name;
+		int reply;
+		List cant = new ArrayList();
+		
+		reply = 5;
+		name = "";
+				
+		//Instance the variables for the flight.
+		plane = JOptionPane.showInputDialog("What plane is it?");
+		
+		arrivalDeparture = JOptionPane.showInputDialog("Is it an arrival or departure?");
+		
+		when = JOptionPane.showInputDialog("what time is the " + arrivalDeparture + "?");
+		
+		
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Simple Dialog Box Example");
+		setSize(500,500);
+		setLocationRelativeTo(null);
+		
+		setVisible(true);
+		
+		
+		
+		//This is the dialogue box that will appear.
+		String[] buttonOptions = new String[] {"Dibs", "Ask Later", "I Can't"};
+		
+		//The buttons are made with the object array - in this case a String array.
+		
+		
+		
+		/*The possible replies are "Dibs", "Ask later", and "I Can't"
+		 * While the Reply is not "Dibs", the program will continue
+		 * I want ask later to create a dialogue box after a certain amount of time
+		 * if they reply "I Can't", it adds their name to a list so that the other respondents know who can't do it.
+		 */
+		while(reply != 0) {
+			reply = JOptionPane.showOptionDialog(this, plane + " " + arrivalDeparture + " at " + when + 
+					" do you want to cover it?\n Can't: " + cant.toString()
+					, "Flight to cover", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE
+					,optionIcon, buttonOptions, buttonOptions[0]);
+			//Now we do what we want with the reply they gave.
+			// This is if they say "I Can't"
+			if(reply == 2) {
+				name= JOptionPane.showInputDialog("Please type your name: ");
+				cant.add(name);
+			//This is if they say "Ask later"
+			} else if(reply == 1){
+				System.out.println("Ok, I'll ask again when someone else responds.");
+			//There are three options and the last one is "Dibs"	
+			} else {
+				System.out.println("Thank you!");
+			}
+		}
+		
+	}
+}
